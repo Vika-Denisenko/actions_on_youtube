@@ -7,7 +7,7 @@ from page_objects.video_page import VideoPage
 from webdriver_factory import WebDriverFactory
 
 
-class HomePageTest(unittest.TestCase):
+class SearchTest(unittest.TestCase):
 
     def setUp(self) -> None:
         """Действия до теста"""
@@ -23,7 +23,7 @@ class HomePageTest(unittest.TestCase):
         # Выполняется после каждого теста!
         # Сохраняем скриншот с именем каждого теста
         self.driver.save_screenshot('test-reports/' + self.id() + '.png')
-        # self.driver.close()
+        self.driver.close()
 
     def test_1(self):
         """test"""
@@ -33,11 +33,20 @@ class HomePageTest(unittest.TestCase):
         self.assertTrue(self.search_page.click_expected_video(self.expected_title))
 
         self.assertEqual('Пауза (k)', self.video_page.get_condition_vidio())
-
-        self.video_page.move_to_progress_bar()
+        print(self.video_page.get_width_video())
+        print(self.video_page.get_position_now())
+        self.video_page.move_in_progress_bar(1/3)
+        print(self.video_page.get_position_now())
+        self.assertEqual('Пауза (k)', self.video_page.get_condition_vidio())
+        self.video_page.move_in_progress_bar(4/5)
+        print(self.video_page.get_position_now())
         self.assertEqual('Пауза (k)', self.video_page.get_condition_vidio())
 
-        time.sleep(10)
+
+
+
+
+
 
 
 
