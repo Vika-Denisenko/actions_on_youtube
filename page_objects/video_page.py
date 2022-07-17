@@ -1,5 +1,3 @@
-import time
-
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
@@ -22,18 +20,6 @@ class VideoPage(BasePage):
         bar_with_width_in_px = self.driver.find_element(By.CLASS_NAME, "ytp-chrome-bottom")
         return bar_with_width_in_px
 
-    def get_progress_bar_in_sec(self):
-        progress_bar = self.get_bar_in_px().find_elements(By.CLASS_NAME, 'ytp-progress-bar')[0]
-        return progress_bar
-
-    def get_attribute_video_size_in_sec(self) -> int:
-        max_time_video = int(self.get_progress_bar_in_sec().get_attribute('aria-valuemax'))
-        return max_time_video
-
-    def get_aria_valuenow_in_sec(self):
-        time_now = int(self.get_progress_bar_in_sec().get_attribute('aria-valuenow'))
-        return time_now
-
     def get_progress_bar(self) -> WebElement:
         progress_bar = self.driver.find_element(By.CLASS_NAME, "ytp-scrubber-container")
         return progress_bar
@@ -53,14 +39,23 @@ class VideoPage(BasePage):
     def move_in_progress_bar(self, value) -> None:
         action = ActionChains(self.driver)
         action.move_to_element_with_offset(self.get_progress_bar(), 0, 0)
-        #action.pause(3)
-        dx=round(self.get_width_video()*value-self.get_position_now())
-        print(f'Длительность видео всего {self.get_attribute_video_size_in_sec()} до перемотки {self.get_aria_valuenow_in_sec()}')
+        # action.pause(3)
+        dx = round(self.get_width_video() * value - self.get_position_now())
+        #print(
+         #   f'Длительность видео всего {self.get_attribute_video_size_in_sec()} до перемотки {self.get_aria_valuenow_in_sec()}')
         action.move_by_offset(dx, 0)
         action.click()
         action.perform()
-        print(f'После перемотки {self.get_aria_valuenow_in_sec()}')
+        #print(f'После перемотки {self.get_aria_valuenow_in_sec()}')
+#Методы для проверки длительности видео в секундах
+'''    def get_progress_bar_in_sec(self):
+        progress_bar = self.get_bar_in_px().find_elements(By.CLASS_NAME, 'ytp-progress-bar')[0]
+        return progress_bar
 
+    def get_attribute_video_size_in_sec(self) -> int:
+        max_time_video = int(self.get_progress_bar_in_sec().get_attribute('aria-valuemax'))
+        return max_time_video
 
-
-
+    def get_aria_valuenow_in_sec(self):
+        time_now = int(self.get_progress_bar_in_sec().get_attribute('aria-valuenow'))
+        return time_now'''

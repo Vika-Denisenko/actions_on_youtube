@@ -31,15 +31,10 @@ class SearchTest(unittest.TestCase):
         self.home_page.send_text_in_the_search_field(self.search_query)
         self.home_page.click_search_button()
         self.assertTrue(self.search_page.click_expected_video(self.expected_title))
-
         self.assertEqual('Пауза (k)', self.video_page.get_condition_vidio())
-        print(self.video_page.get_width_video())
-        print(self.video_page.get_position_now())
         self.video_page.move_in_progress_bar(1/3)
-        print(self.video_page.get_position_now())
         self.assertEqual('Пауза (k)', self.video_page.get_condition_vidio())
         self.video_page.move_in_progress_bar(4/5)
-        print(self.video_page.get_position_now())
         self.assertEqual('Пауза (k)', self.video_page.get_condition_vidio())
 
 
